@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\UserProfile;
+use App\BloodType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -26,7 +27,10 @@ class UserProfileController extends Controller
      */
     public function create()
     {
-        //
+        $bloodtypes = BloodType::all();
+
+        return view('userprofiles.CreateOrEdit')->with('bloodtypes', $bloodtypes);
+        
     }
 
     /**
