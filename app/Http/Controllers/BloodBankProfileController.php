@@ -15,9 +15,9 @@ class BloodBankProfileController extends Controller
      */
     public function index()
     {
-        $bloodbank = BloodBankProfile::where('user_id', '=', Auth::user()->id)->get();
+        $bloodbank = BloodBankProfile::where('user_id', '=', Auth::user()->id)->first();
 
-        return view('bloodbankprofiles.index')->with('bloodbank', bloodbank);
+        return view('bloodbankprofiles.index')->with('bloodbankprofile', $bloodbank);
     }
 
     /**
@@ -27,7 +27,7 @@ class BloodBankProfileController extends Controller
      */
     public function create()
     {
-        //
+        return view('bloodbankprofiles.CreateOrEdit');
     }
 
     /**
@@ -38,7 +38,23 @@ class BloodBankProfileController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'phone' => 'required',
+            'address' => 'required',
+            'in_charge' => 'required',
+            'in_charge_contact' => 'required'
+        ]);
+        
+        $bloodBankProfile = new BloodBankProfile;
+        $bloodBankProfile->user_id = Auth::user()->id;
+        $bloodBankProfile->phone = $request->input('phone');
+        $bloodBankProfile->address = $request->input('address');
+        $bloodBankProfile->in_charge = $request->input('in_charge');
+        $bloodBankProfile->in_charge_contact = $request->input('in_charge_contact');
+        $bloodBankProfile->save();
+
+
+        return redirect()->route('bloodbankprofiles.index')->with('success', 'Blood Bank Profile Added');
     }
 
     /**
@@ -60,7 +76,8 @@ class BloodBankProfileController extends Controller
      */
     public function edit(BloodBankProfile $bloodBankProfile)
     {
-        //
+        $bloodbank = BloodBankProfile::where('user_id', '=', Auth::user()->id)->first();
+        return view('bloodbankprofiles.CreateOrEdit')->with('bloodbankprofile', $bloodbank);
     }
 
     /**
@@ -72,7 +89,23 @@ class BloodBankProfileController extends Controller
      */
     public function update(Request $request, BloodBankProfile $bloodBankProfile)
     {
-        //
+        $this->validate($request, [
+            'phone' => 'required',
+            'address' => 'required',
+            'in_charge' => 'required',
+            'in_charge_contact' => 'required'
+        ]);
+
+        $bloodBankProfile = Auth::user()->bloodbankprofile;
+        $bloodBankProfile->user_id = Auth::user()->id;
+        $bloodBankProfile->phone = $request->input('phone');
+        $bloodBankProfile->address = $request->input('address');
+        $bloodBankProfile->in_charge = $request->input('in_charge');
+        $bloodBankProfile->in_charge_contact = $request->input('in_charge_contact');
+        $bloodBankProfile->save();
+
+
+        return redirect()->route('bloodbankprofiles.index')->with('success', 'Blood Bank Profile Added');
     }
 
     /**

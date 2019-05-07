@@ -10,7 +10,7 @@
 
 
 	<div class="card">
-		<div class="card-header">@if(isset($userprofile)) Edit @else Add @endif User Profile</div>
+		<div class="card-header">@if(isset($userprofile)) Edit @else Create @endif Blood Bank Profile</div>
 		<div class="card-body">
 			
 			{{ Form::open(['action' => isset($userprofile)? ['UserProfileController@update', $userprofile]:'UserProfileController@store', 'method' => 'POST']) }}

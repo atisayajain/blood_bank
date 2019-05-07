@@ -51,6 +51,9 @@
                         @else
                             @if (Auth::user()->isUser())
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{ route('transactions.index') }}">{{ __('Transactions') }}</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{ route('userprofiles.index') }}">{{ __('Profile') }}</a>
                                 </li>
                             @elseif (Auth::user()-> isBloodBank())
